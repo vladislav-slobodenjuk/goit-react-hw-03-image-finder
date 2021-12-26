@@ -3,6 +3,7 @@ import { Component } from 'react';
 import Searchbar from './Searchbar/Searchbar';
 
 import { ToastContainer } from 'react-toastify';
+import { Zoom } from 'react-toastify';
 
 // import logo from 'logo.svg';
 import s from './App.module.scss';
@@ -36,7 +37,7 @@ class App extends Component {
           </a>
         </header> */}
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ToastContainer autoClose={3000} />
+        <ToastContainer autoClose={4000} theme="colored" transition={Zoom} />
       </div>
     );
   }

@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
-import { toast } from 'react-toastify';
 
+import { toast } from 'react-toastify';
 import { ImSearch } from 'react-icons/im';
+
 import s from './Searchbar.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,12 +19,13 @@ export default class Searchbar extends PureComponent {
     e.preventDefault();
 
     if (this.state.searchString.trim() === '') {
+      //!!! trim
       // alert('zero string');
       toast.warn('zero string');
       return;
     }
 
-    this.props.onSubmit(this.state.searchString.trim());
+    this.props.onSubmit(this.state.searchString.trim()); // !!! trim
     this.setState({ searchString: '' });
   };
 
