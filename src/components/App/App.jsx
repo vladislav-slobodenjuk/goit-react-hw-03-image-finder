@@ -1,6 +1,8 @@
 import { Component } from 'react';
 // import { ImSearch } from 'react-icons/im';
-import Searchbar from './Searchbar/Searchbar';
+import Searchbar from 'components/Searchbar/Searchbar';
+// import ImageGalleryInfo from 'components/ImageGallery/ImageGalleryInfo.js';
+import ImageGallery from 'components/ImageGallery/ImageGallery';
 
 import { ToastContainer } from 'react-toastify';
 import { Zoom } from 'react-toastify';
@@ -37,6 +39,7 @@ class App extends Component {
           </a>
         </header> */}
         <Searchbar onSubmit={this.handleFormSubmit} />
+        <ImageGallery searchString={this.state.searchString} />
         <ToastContainer autoClose={4000} theme="colored" transition={Zoom} />
       </div>
     );
