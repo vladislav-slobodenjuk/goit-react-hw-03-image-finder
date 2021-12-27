@@ -3,10 +3,12 @@ import React from 'react';
 
 import s from './ImageGalleryItem.module.scss';
 
-export default function ImageGalleryItem() {
+export default function ImageGalleryItem(props) {
+  const { webformatURL, largeImageURL, user, id } = props;
+  const alt = `${user}'s photo №${id}`;
   return (
     <li className={s.galleryItem}>
-      <img className={s.galleryImage} src="" alt="" />
+      <img className={s.galleryImage} src={webformatURL} alt={alt} />
     </li>
   );
 }

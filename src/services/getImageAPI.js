@@ -16,26 +16,16 @@ export default async function axiosFetch(searchString, page = 1) {
       params: { q: searchString, page: page },
     });
 
+    // console.log(result);
+
     const {
       data: { hits },
     } = result;
 
-    console.log(hits);
+    // console.log(hits);
 
     return hits;
   } catch (error) {
     console.log(error);
   }
 }
-
-// const axiosInstance = axios.create({
-//   baseURL: 'https://pixabay.com/api/?',
-//   timeout: 2000,
-
-//   params: {
-//     key: '24000598-4cbb5e18617bf8e66757f824b',
-//     image_type: 'photo',
-//     orientation: 'horizontal',
-//     per_page: 12,
-//   },
-// });
