@@ -16,13 +16,9 @@ export default async function axiosFetch(searchString, page = 1) {
       params: { q: searchString, page: page },
     });
 
-    // console.log(result);
-
     const {
       data: { hits },
     } = result;
-
-    // console.log(hits);
 
     return hits;
   } catch (error) {

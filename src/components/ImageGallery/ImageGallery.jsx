@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 // import propTypes from 'prop-types';
-import axiosFetch from 'services/getImageAPI';
-import Loader from 'react-loader-spinner';
+import axiosFetch from 'services/pixabayAPI';
 
+import ImageGalleryPendingView from './ImageGalleryPendingView';
 import ImageGalleryErrorView from './ImageGalleryErrorView';
 import ImageGalleryDataView from './ImageGalleryDataView';
 import Button from 'components/Button/Button';
 
-import s from './ImageGallery.module.scss';
+// import s from './ImageGallery.module.scss';
 
 export default class ImageGallery extends Component {
   state = {
@@ -29,7 +29,6 @@ export default class ImageGallery extends Component {
         .then(result => {
           console.log('result', result);
 
-          // console.log(result.length);
           if (result.length === 0) {
             return Promise.reject(
               new Error(`По запросу ${nextSearch} ничего нет`),
@@ -58,11 +57,7 @@ export default class ImageGallery extends Component {
         <h2
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            // justifyContent: 'center',
-            alignItems: 'center',
-            // backgroundColor: 'rgba(0, 0, 0, 0.05)',
-            // zIndex: '1200',
+            justifyContent: 'center',
           }}
         >
           Введите имя поиска
@@ -71,25 +66,7 @@ export default class ImageGallery extends Component {
     }
 
     if (status === 'pending') {
-      // return <div>Zagruzka</div>;
-      return (
-        <div
-          style={{
-            position: 'fixed',
-            top: '0',
-            left: '0',
-            width: '100vw',
-            height: '100vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.05)',
-            zIndex: '1200',
-          }}
-        >
-          <Loader type="Bars" color="#3f51b5" height={80} width={80} />
-        </div>
-      );
+      return <ImageGalleryPendingView />;
     }
 
     if (status === 'rejected') {
