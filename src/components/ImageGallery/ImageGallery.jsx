@@ -52,7 +52,6 @@ export default class ImageGallery extends Component {
     console.log(this.state.imageArray);
 
     const { imageArray, error, status } = this.state;
-    // const { searchString } = this.props;
 
     if (status === 'idle') {
       return (
@@ -94,17 +93,10 @@ export default class ImageGallery extends Component {
     }
 
     if (status === 'rejected') {
-      // return <div>{error.message}</div>;
       return <ImageGalleryErrorView message={error.message} />;
     }
 
     if (status === 'resolved') {
-      // return (
-      //   <ul className={s.gallery}>
-      //     {imageArray.length > 0 && <p>render li</p>}
-      //     {/* <!-- Набор <li> с изображениями --> */}
-      //   </ul>
-      // );
       return (
         <>
           <ImageGalleryDataView imageArray={imageArray} />
