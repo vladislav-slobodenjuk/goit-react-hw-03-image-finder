@@ -1,4 +1,5 @@
 import React from 'react';
+// import propTypes from 'prop-types';
 import errorImage from 'error.jpg';
 
 export default function ImageGalleryErrorView({ message }) {
@@ -7,10 +8,7 @@ export default function ImageGalleryErrorView({ message }) {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        // justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: 'rgba(0, 0, 0, 0.05)',
-        // zIndex: '1200',
       }}
     >
       <h1>{message}</h1>

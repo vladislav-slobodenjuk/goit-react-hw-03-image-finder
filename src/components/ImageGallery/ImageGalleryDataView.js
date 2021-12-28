@@ -10,8 +10,6 @@ export default function ImageGalleryDataView({ imageArray, toggleModal }) {
     <ul className={s.gallery}>
       {imageArray.map(image => {
         const { id, webformatURL, largeImageURL, user } = image;
-        // console.log(image);
-        // console.log(webformatURL);
 
         return (
           <ImageGalleryItem
@@ -27,11 +25,3 @@ export default function ImageGalleryDataView({ imageArray, toggleModal }) {
     </ul>
   );
 }
-
-// {imageArray.map(image => {
-//   console.log(image)
-//   const {} = image
-
-//   return ((
-//   <li></li>
-// ))

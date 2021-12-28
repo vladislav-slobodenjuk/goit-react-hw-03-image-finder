@@ -7,8 +7,6 @@ export default function ImageGalleryItem(props) {
   const { webformatURL, largeImageURL, user, id, toggleModal } = props;
   const alt = `${user}'s photo №${id}`;
 
-  // console.log(toggleModal);
-
   return (
     <li className={s.galleryItem}>
       <img

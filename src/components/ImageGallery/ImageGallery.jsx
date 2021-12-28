@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import propTypes from 'prop-types';
 import axiosFetch from 'services/pixabayAPI';
 
+import ImageGalleryIdleView from './ImageGalleryIdleView';
 import ImageGalleryPendingView from './ImageGalleryPendingView';
 import ImageGalleryErrorView from './ImageGalleryErrorView';
 import ImageGalleryDataView from './ImageGalleryDataView';
@@ -20,14 +21,15 @@ export default class ImageGallery extends Component {
   componentDidUpdate(prevProps, prevState) {
     const prevSearch = prevProps.searchString;
     const nextSearch = this.props.searchString;
-    const searchPage = this.props.page;
+    const prevPage = prevState.page;
+    const nextPage = this.state.page;
 
     if (prevSearch !== nextSearch) {
       console.log('search chanched');
 
-      this.setState({ status: 'pending' });
+      this.setState({ status: 'pending', page: 1 });
 
-      axiosFetch(nextSearch, searchPage)
+      axiosFetch(nextSearch, nextPage)
         .then(result => {
           console.log('result', result);
 
@@ -38,19 +40,38 @@ export default class ImageGallery extends Component {
             );
           }
 
-          // this.setState(prevState => ({
-          //   imageArray: [...prevState.imageArray, ...result],
-          //   status: 'resolved',
-
           this.setState({
             imageArray: [...result],
             status: 'resolved',
           });
           // сделать тост
-          // console.log(this.state);
         })
         .catch(error => this.setState({ error, status: 'rejected' }));
-      // .finally(() => this.setState({ loading: false }));
+    }
+
+    if (prevPage !== nextPage) {
+      console.log('add images');
+
+      this.setState({ status: 'pending' });
+
+      axiosFetch(nextSearch, nextPage)
+        .then(result => {
+          console.log('result', result);
+
+          if (result.length === 0) {
+            return Promise.reject(
+              new Error(`По запросу ${nextSearch} ничего нет`),
+              //сделать тост
+            );
+          }
+
+          this.setState(prevState => ({
+            imageArray: [...prevState.imageArray, ...result],
+            status: 'resolved',
+            // сделать тост
+          }));
+        })
+        .catch(error => this.setState({ error, status: 'rejected' }));
     }
   }
 
@@ -61,21 +82,12 @@ export default class ImageGallery extends Component {
   };
 
   render() {
-    console.log(this.state.imageArray);
+    // console.log(this.state.imageArray);
 
     const { imageArray, error, status } = this.state;
 
     if (status === 'idle') {
-      return (
-        <h2
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          Введите имя поиска
-        </h2>
-      );
+      return <ImageGalleryIdleView />;
     }
 
     if (status === 'pending') {
@@ -99,5 +111,3 @@ export default class ImageGallery extends Component {
     }
   }
 }
-
-//это аналог инфо / view
