@@ -34,7 +34,13 @@ class App extends Component {
 
     return (
       <div className={s.app}>
-        {showModal && <Modal src={modalImage} alt={modalAlt} />}
+        {showModal && (
+          <Modal
+            src={modalImage}
+            alt={modalAlt}
+            onClose={this.toggleModal}
+          />
+        )}
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery
           searchString={searchString}
