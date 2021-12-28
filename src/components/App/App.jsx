@@ -1,45 +1,45 @@
 import { Component } from 'react';
-// import { ImSearch } from 'react-icons/im';
 import Searchbar from 'components/Searchbar/Searchbar';
-// import ImageGalleryInfo from 'components/ImageGallery/ImageGalleryInfo.js';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
+import Modal from 'components/Modal/Modal';
 
 import { ToastContainer } from 'react-toastify';
 import { Zoom } from 'react-toastify';
 
-// import logo from 'logo.svg';
 import s from './App.module.scss';
 
 class App extends Component {
   state = {
     searchString: '',
+    showModal: false,
+    modalImage: '',
+    modalAlt: '',
   };
 
   handleFormSubmit = data => {
     this.setState({ searchString: data });
   };
 
+  toggleModal = (largeImageURL, alt) => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+      modalImage: largeImageURL,
+      modalAlt: alt,
+    }));
+  };
+
   render() {
-    console.log(this.state);
+    // console.log(this.state);
+    const { searchString, showModal, modalImage, modalAlt } = this.state;
 
     return (
       <div className={s.app}>
-        {/* <header className={s.appHeader}>
-          <img src={logo} className={s.appLogo} alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload. <ImSearch />
-          </p>
-          <a
-            className={s.appLink}
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header> */}
+        {showModal && <Modal src={modalImage} alt={modalAlt} />}
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImageGallery searchString={this.state.searchString} />
+        <ImageGallery
+          searchString={searchString}
+          toggleModal={this.toggleModal}
+        />
         <ToastContainer autoClose={4000} theme="colored" transition={Zoom} />
       </div>
     );

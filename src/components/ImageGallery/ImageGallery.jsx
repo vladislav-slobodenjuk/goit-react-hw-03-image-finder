@@ -42,8 +42,8 @@ export default class ImageGallery extends Component {
           }));
           // console.log(this.state);
         })
-        .catch(error => this.setState({ error, status: 'rejected' }))
-        .finally(() => this.setState({ loading: false }));
+        .catch(error => this.setState({ error, status: 'rejected' }));
+      // .finally(() => this.setState({ loading: false }));
     }
   }
 
@@ -76,7 +76,10 @@ export default class ImageGallery extends Component {
     if (status === 'resolved') {
       return (
         <>
-          <ImageGalleryDataView imageArray={imageArray} />
+          <ImageGalleryDataView
+            imageArray={imageArray}
+            toggleModal={this.props.toggleModal}
+          />
           <Button />;
         </>
       );

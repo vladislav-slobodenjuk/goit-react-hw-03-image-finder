@@ -5,12 +5,12 @@ import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 
 import s from './ImageGallery.module.scss';
 
-export default function ImageGalleryDataView({ imageArray }) {
+export default function ImageGalleryDataView({ imageArray, toggleModal }) {
   return (
     <ul className={s.gallery}>
       {imageArray.map(image => {
         const { id, webformatURL, largeImageURL, user } = image;
-        console.log(image);
+        // console.log(image);
         // console.log(webformatURL);
 
         return (
@@ -20,6 +20,7 @@ export default function ImageGalleryDataView({ imageArray }) {
             largeImageURL={largeImageURL}
             id={id}
             user={user}
+            toggleModal={toggleModal}
           />
         );
       })}
