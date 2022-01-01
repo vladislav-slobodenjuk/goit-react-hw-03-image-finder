@@ -19,7 +19,7 @@ export default class ImageGallery extends Component {
     page: 1,
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const prevSearch = prevProps.searchString;
     const nextSearch = this.props.searchString;
     const prevPage = prevState.page;
@@ -28,22 +28,42 @@ export default class ImageGallery extends Component {
     if (prevSearch !== nextSearch) {
       this.setState({ status: 'pending', page: 1 });
 
-      axiosFetch(nextSearch, nextPage)
-        .then(result => {
-          if (result.length === 0) {
-            return Promise.reject(
-              new Error(`По запросу ${nextSearch} ничего нет`),
-              toast.warn('Ничего не нашли :('),
-            );
-          }
+      try {
+        const fetchResult = await axiosFetch(nextSearch, nextPage);
 
-          this.setState({
-            imageArray: [...result],
-            status: 'resolved',
-          });
-          toast.success('Ура, нашли!');
-        })
-        .catch(error => this.setState({ error, status: 'rejected' }));
+        if (fetchResult.length === 0) {
+          throw (
+            (new Error(`По запросу ${nextSearch} ничего нет`),
+            toast.warn('Ничего не нашли :('))
+          );
+        }
+
+        this.setState({
+          imageArray: [...fetchResult],
+          status: 'resolved',
+        });
+        toast.success('Ура, нашли!');
+      } catch (error) {
+        console.log(error);
+        this.setState({ error, status: 'rejected' });
+      }
+
+      //   axiosFetch(nextSearch, nextPage)
+      //     .then(result => {
+      //       if (result.length === 0) {
+      //         return Promise.reject(
+      //           new Error(`По запросу ${nextSearch} ничего нет`),
+      //           toast.warn('Ничего не нашли :('),
+      //         );
+      //       }
+
+      //   this.setState({
+      //     imageArray: [...result],
+      //     status: 'resolved',
+      //   });
+      //   toast.success('Ура, нашли!');
+      // })
+      //     .catch(error => this.setState({ error, status: 'rejected' }));
     }
 
     if (prevPage !== nextPage) {
