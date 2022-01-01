@@ -8,8 +8,6 @@ import ImageGalleryErrorView from './ImageGalleryErrorView';
 import ImageGalleryDataView from './ImageGalleryDataView';
 import Button from 'components/Button/Button';
 
-// import s from './ImageGallery.module.scss';
-
 export default class ImageGallery extends Component {
   state = {
     imageArray: [],
@@ -25,14 +23,10 @@ export default class ImageGallery extends Component {
     const nextPage = this.state.page;
 
     if (prevSearch !== nextSearch) {
-      console.log('search chanched');
-
       this.setState({ status: 'pending', page: 1 });
 
       axiosFetch(nextSearch, nextPage)
         .then(result => {
-          console.log('result', result);
-
           if (result.length === 0) {
             return Promise.reject(
               new Error(`По запросу ${nextSearch} ничего нет`),
@@ -50,14 +44,10 @@ export default class ImageGallery extends Component {
     }
 
     if (prevPage !== nextPage) {
-      console.log('add images');
-
       this.setState({ status: 'pending' });
 
       axiosFetch(nextSearch, nextPage)
         .then(result => {
-          console.log('result', result);
-
           if (result.length === 0) {
             return Promise.reject(
               new Error(`По запросу ${nextSearch} ничего нет`),
@@ -82,8 +72,6 @@ export default class ImageGallery extends Component {
   };
 
   render() {
-    // console.log(this.state.imageArray);
-
     const { imageArray, error, status } = this.state;
 
     if (status === 'idle') {

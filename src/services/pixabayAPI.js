@@ -10,20 +10,13 @@ axios.defaults.params = {
   per_page: 12,
 };
 
-export default async function axiosFetch(q = '', page = 1) {
-  const params = { q, page };
-
+export default async function axiosFetch(searchString = '', page = 1) {
   try {
-    // const result = await axios.get('', {
-    //   params: { q: searchString, page: page },
-    // });
-    const result = await axios.get('', { params });
+    const { data } = await axios.get('', {
+      params: { q: searchString, page: page },
+    });
 
-    const {
-      data: { hits },
-    } = result;
-
-    return hits;
+    return data.hits;
   } catch (error) {
     console.error(error);
   }

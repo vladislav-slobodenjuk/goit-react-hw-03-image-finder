@@ -1,6 +1,6 @@
 import React from 'react';
 // import propTypes from 'prop-types';
-import errorImage from 'error.jpg';
+import errorImage from 'images/error.jpg';
 
 export default function ImageGalleryErrorView({ message }) {
   return (
