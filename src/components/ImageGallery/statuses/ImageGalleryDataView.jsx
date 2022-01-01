@@ -1,9 +1,8 @@
 import React from 'react';
-// import { Component } from 'react/cjs/react.production.min';
 // import propTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 
-import s from './ImageGallery.module.scss';
+import s from './../ImageGallery.module.scss';
 
 export default function ImageGalleryDataView({ imageArray, toggleModal }) {
   return (

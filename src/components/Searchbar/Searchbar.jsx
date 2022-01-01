@@ -21,7 +21,7 @@ export default class Searchbar extends PureComponent {
     if (this.state.searchString.trim() === '') {
       //!!! trim
       // alert('zero string');
-      toast.warn('zero string');
+      toast.error('Введите что будем искать');
       return;
     }
 

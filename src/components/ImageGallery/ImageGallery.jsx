@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 // import propTypes from 'prop-types';
 import axiosFetch from 'services/pixabayAPI';
+import { toast } from 'react-toastify';
 
-import ImageGalleryIdleView from './ImageGalleryIdleView';
-import ImageGalleryPendingView from './ImageGalleryPendingView';
-import ImageGalleryErrorView from './ImageGalleryErrorView';
-import ImageGalleryDataView from './ImageGalleryDataView';
+import ImageGalleryIdleView from './statuses/ImageGalleryIdleView';
+import ImageGalleryPendingView from './statuses/ImageGalleryPendingView';
+import ImageGalleryErrorView from './statuses/ImageGalleryErrorView';
+import ImageGalleryDataView from './statuses/ImageGalleryDataView';
 import Button from 'components/Button/Button';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export default class ImageGallery extends Component {
   state = {
@@ -30,7 +33,7 @@ export default class ImageGallery extends Component {
           if (result.length === 0) {
             return Promise.reject(
               new Error(`По запросу ${nextSearch} ничего нет`),
-              //сделать тост
+              toast.warn('Ничего не нашли :('),
             );
           }
 
@@ -38,7 +41,7 @@ export default class ImageGallery extends Component {
             imageArray: [...result],
             status: 'resolved',
           });
-          // сделать тост
+          toast.success('Ура, нашли!');
         })
         .catch(error => this.setState({ error, status: 'rejected' }));
     }
@@ -51,15 +54,15 @@ export default class ImageGallery extends Component {
           if (result.length === 0) {
             return Promise.reject(
               new Error(`По запросу ${nextSearch} ничего нет`),
-              //сделать тост
+              toast.warn('Ничего не нашли :('),
             );
           }
 
           this.setState(prevState => ({
             imageArray: [...prevState.imageArray, ...result],
             status: 'resolved',
-            // сделать тост
           }));
+          toast.success('Ура, нашли!');
         })
         .catch(error => this.setState({ error, status: 'rejected' }));
     }

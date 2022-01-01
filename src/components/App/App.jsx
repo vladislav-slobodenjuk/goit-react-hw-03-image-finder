@@ -29,17 +29,12 @@ class App extends Component {
   };
 
   render() {
-    // console.log(this.state);
     const { searchString, showModal, modalImage, modalAlt } = this.state;
 
     return (
       <div className={s.app}>
         {showModal && (
-          <Modal
-            src={modalImage}
-            alt={modalAlt}
-            onClose={this.toggleModal}
-          />
+          <Modal src={modalImage} alt={modalAlt} onClose={this.toggleModal} />
         )}
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery
