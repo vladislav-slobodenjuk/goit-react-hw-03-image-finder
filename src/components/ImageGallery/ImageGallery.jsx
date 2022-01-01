@@ -62,7 +62,7 @@ export default class ImageGallery extends Component {
             imageArray: [...prevState.imageArray, ...result],
             status: 'resolved',
           }));
-          toast.success('Ура, нашли!');
+          toast.success('Ура, еще нашли!');
         })
         .catch(error => this.setState({ error, status: 'rejected' }));
     }
@@ -77,28 +77,23 @@ export default class ImageGallery extends Component {
   render() {
     const { imageArray, error, status } = this.state;
 
-    if (status === 'idle') {
-      return <ImageGalleryIdleView />;
-    }
-
-    if (status === 'pending') {
-      return <ImageGalleryPendingView />;
-    }
-
-    if (status === 'rejected') {
-      return <ImageGalleryErrorView message={error.message} />;
-    }
-
-    if (status === 'resolved') {
-      return (
-        <>
-          <ImageGalleryDataView
-            imageArray={imageArray}
-            toggleModal={this.props.toggleModal}
-          />
-          <Button pageDown={this.incrPage} />;
-        </>
-      );
-    }
+    return (
+      <>
+        {status === 'idle' && <ImageGalleryIdleView />}
+        {status === 'pending' && <ImageGalleryPendingView />}
+        {status === 'rejected' && (
+          <ImageGalleryErrorView message={error.message} />
+        )}
+        {status === 'resolved' && (
+          <>
+            <ImageGalleryDataView
+              imageArray={imageArray}
+              toggleModal={this.props.toggleModal}
+            />
+            <Button pageDown={this.incrPage} />;
+          </>
+        )}
+      </>
+    );
   }
 }
