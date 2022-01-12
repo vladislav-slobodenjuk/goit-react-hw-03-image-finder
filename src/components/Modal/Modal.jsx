@@ -1,10 +1,18 @@
-import React, { Component } from 'react';
+import { PureComponent } from 'react';
 import { createPortal } from 'react-dom';
+import propTypes from 'prop-types';
+
 import s from './Modal.module.scss';
 
 const modalRoot = document.getElementById('modal-root');
 
-export default class Modal extends Component {
+export default class Modal extends PureComponent {
+  static propTypes = {
+    src: propTypes.string.isRequired,
+    alt: propTypes.string.isRequired,
+    onClose: propTypes.func.isRequired,
+  };
+
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
   }

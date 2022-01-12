@@ -1,4 +1,5 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
+import propTypes from 'prop-types';
 
 import { toast } from 'react-toastify';
 import { ImSearch } from 'react-icons/im';
@@ -7,6 +8,10 @@ import s from './Searchbar.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default class Searchbar extends PureComponent {
+  static propTypes = {
+    onSubmit: propTypes.func.isRequired,
+  };
+
   state = {
     searchString: '',
   };
@@ -20,7 +25,6 @@ export default class Searchbar extends PureComponent {
 
     if (this.state.searchString.trim() === '') {
       //!!! trim
-      // alert('zero string');
       toast.error('Введите что будем искать');
       return;
     }
@@ -34,7 +38,6 @@ export default class Searchbar extends PureComponent {
       <header className={s.searchBar}>
         <form className={s.searchForm} onSubmit={this.handleSubmit}>
           <button type="submit" className={s.searchFormButton}>
-            {/* <span className={s.searchFormButtonLabel}>Search</span> */}
             <ImSearch />
           </button>
 

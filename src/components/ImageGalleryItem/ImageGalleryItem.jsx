@@ -1,5 +1,4 @@
-import React from 'react';
-// import propTypes from 'prop-types';
+import propTypes from 'prop-types';
 
 import s from './ImageGalleryItem.module.scss';
 
@@ -18,3 +17,11 @@ export default function ImageGalleryItem(props) {
     </li>
   );
 }
+
+ImageGalleryItem.propTypes = {
+  webformatURL: propTypes.string.isRequired,
+  largeImageURL: propTypes.string.isRequired,
+  user: propTypes.string.isRequired,
+  id: propTypes.number.isRequired,
+  toggleModal: propTypes.func.isRequired,
+};

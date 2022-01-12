@@ -1,4 +1,4 @@
-import React from 'react';
+import propTypes from 'prop-types';
 import s from './Button.module.scss';
 
 export default function Button({ pageDown }) {
@@ -8,3 +8,7 @@ export default function Button({ pageDown }) {
     </button>
   );
 }
+
+Button.propTypes = {
+  pageDown: propTypes.func.isRequired,
+};

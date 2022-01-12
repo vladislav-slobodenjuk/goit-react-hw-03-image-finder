@@ -1,4 +1,3 @@
-import React from 'react';
 import Loader from 'react-loader-spinner';
 
 const style = {
@@ -10,7 +9,7 @@ const style = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: 'rgba(0, 0, 0, 0.05)',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
   zIndex: '1200',
 };
 

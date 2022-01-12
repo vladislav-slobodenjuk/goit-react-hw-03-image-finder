@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-// import propTypes from 'prop-types';
+import { Component } from 'react';
+import propTypes from 'prop-types';
 import axiosFetch from 'services/pixabayAPI';
 import { toast } from 'react-toastify';
 
@@ -12,6 +12,11 @@ import Button from 'components/Button/Button';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default class ImageGallery extends Component {
+  static propTypes = {
+    searchString: propTypes.string.isRequired,
+    toggleModal: propTypes.func.isRequired,
+  };
+
   state = {
     imageArray: [],
     error: null,
@@ -32,10 +37,8 @@ export default class ImageGallery extends Component {
         const fetchResult = await axiosFetch(nextSearch, nextPage);
 
         if (fetchResult.length === 0) {
-          throw (
-            (new Error(`По запросу ${nextSearch} ничего нет`),
-            toast.warn('Ничего не нашли :('))
-          );
+          toast.warn('Ничего не нашли :(');
+          throw new Error(`По запросу ${nextSearch} ничего нет`);
         }
 
         this.setState({
@@ -44,47 +47,29 @@ export default class ImageGallery extends Component {
         });
         toast.success('Ура, нашли!');
       } catch (error) {
-        console.log(error);
         this.setState({ error, status: 'rejected' });
       }
-
-      //   axiosFetch(nextSearch, nextPage)
-      //     .then(result => {
-      //       if (result.length === 0) {
-      //         return Promise.reject(
-      //           new Error(`По запросу ${nextSearch} ничего нет`),
-      //           toast.warn('Ничего не нашли :('),
-      //         );
-      //       }
-
-      //   this.setState({
-      //     imageArray: [...result],
-      //     status: 'resolved',
-      //   });
-      //   toast.success('Ура, нашли!');
-      // })
-      //     .catch(error => this.setState({ error, status: 'rejected' }));
     }
 
-    if (prevPage !== nextPage) {
+    if (prevPage !== nextPage && nextPage !== 1) {
       this.setState({ status: 'pending' });
 
-      axiosFetch(nextSearch, nextPage)
-        .then(result => {
-          if (result.length === 0) {
-            return Promise.reject(
-              new Error(`По запросу ${nextSearch} ничего нет`),
-              toast.warn('Ничего не нашли :('),
-            );
-          }
+      try {
+        const fetchResult = await axiosFetch(nextSearch, nextPage);
 
-          this.setState(prevState => ({
-            imageArray: [...prevState.imageArray, ...result],
-            status: 'resolved',
-          }));
-          toast.success('Ура, еще нашли!');
-        })
-        .catch(error => this.setState({ error, status: 'rejected' }));
+        if (fetchResult.length === 0) {
+          toast.warn('Больше ничего нет, это все :(');
+          throw new Error(`Больше ничего нет`);
+        }
+
+        this.setState(prevState => ({
+          imageArray: [...prevState.imageArray, ...fetchResult],
+          status: 'resolved',
+        }));
+        toast.success('Ура, еще нашли!');
+      } catch (error) {
+        this.setState({ error, status: 'rejected' });
+      }
     }
   }
 
