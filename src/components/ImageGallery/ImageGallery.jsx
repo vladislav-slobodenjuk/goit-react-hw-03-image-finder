@@ -34,7 +34,7 @@ export default class ImageGallery extends Component {
       this.setState({ status: 'pending', page: 1 });
 
       try {
-        const fetchResult = await axiosFetch(nextSearch, nextPage);
+        const fetchResult = await axiosFetch(nextSearch);
 
         if (fetchResult.length === 0) {
           toast.warn('Ничего не нашли :(');
@@ -59,7 +59,8 @@ export default class ImageGallery extends Component {
 
         if (fetchResult.length === 0) {
           toast.warn('Больше ничего нет, это все :(');
-          throw new Error(`Больше ничего нет`);
+          this.setState({ status: 'resolved' });
+          return;
         }
 
         this.setState(prevState => ({
@@ -89,7 +90,7 @@ export default class ImageGallery extends Component {
         {status === 'rejected' && (
           <ImageGalleryErrorView message={error.message} />
         )}
-        {status === 'resolved' && (
+        {(status === 'resolved' || status === 'pending') && (
           <>
             <ImageGalleryDataView
               imageArray={imageArray}
