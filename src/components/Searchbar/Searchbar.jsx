@@ -16,15 +16,16 @@ export default class Searchbar extends PureComponent {
     searchString: '',
   };
 
-  handleInputChange = e => {
-    this.setState({ searchString: e.currentTarget.value.toLowerCase() });
+  handleInputChange = ({ currentTarget: { value } }) => {
+    this.setState({ searchString: value.toLowerCase() });
   };
 
   handleSubmit = e => {
     e.preventDefault();
 
-    if (this.state.searchString.trim() === '') {
-      //!!! trim
+    const isEmptyString = this.state.searchString.trim() === ''; //!!! trim
+
+    if (isEmptyString) {
       toast.error('Введите что будем искать');
       return;
     }

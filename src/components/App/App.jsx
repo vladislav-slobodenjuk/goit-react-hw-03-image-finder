@@ -16,15 +16,15 @@ class App extends Component {
     modalAlt: '',
   };
 
-  handleFormSubmit = data => {
-    this.setState({ searchString: data });
+  handleFormSubmit = searchString => {
+    this.setState({ searchString });
   };
 
-  toggleModal = (largeImageURL, alt) => {
+  toggleModal = (modalImage, modalAlt) => {
     this.setState(({ showModal }) => ({
       showModal: !showModal,
-      modalImage: largeImageURL,
-      modalAlt: alt,
+      modalImage,
+      modalAlt,
     }));
   };
 

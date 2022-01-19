@@ -38,6 +38,7 @@ export default class ImageGallery extends Component {
 
         if (fetchResult.length === 0) {
           toast.warn('Ничего не нашли :(');
+          this.setState({ imageArray: [] });
           throw new Error(`По запросу ${nextSearch} ничего нет`);
         }
 
